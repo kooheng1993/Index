@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook 2FA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Facebook 2FA</h1>
+        <div class="input-group">
+            <label for="secret">Secret Key:</label>
+            <input type="text" id="secret" placeholder="Enter your secret key" value="">
+        </div>
+        <button id="generate">Generate Code</button>
+        <div class="code-container">
+            <div>Your 2FA code will appear here:</div>
+            <div class="code" id="code" onclick="copyCodeToClipboard()"></div>
+        </div>
+        <div class="timer" id="timer">Valid for: <span id="time-left">30</span> seconds</div>
+    </div>
+    <div class="alert" id="alert"></div>
+    <script src="https://cdn.jsdelivr.net/npm/otplib/otplib-browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
