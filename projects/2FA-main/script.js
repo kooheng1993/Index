@@ -20,6 +20,7 @@ function generateCode() {
         const code = authenticator.generate(secret);
         document.getElementById('code').textContent = code;
         document.getElementById('timer').style.display = 'block';
+        document.getElementById('progress-container').style.display = 'block';
         startTimer(authenticator.timeRemaining());
     } catch (e) {
         console.error('Error generating code:', e);
@@ -32,17 +33,25 @@ function startTimer(timeLeft) {
         clearInterval(timer);
     }
 
+    const totalTime = step;
     document.getElementById('time-left').textContent = timeLeft;
+    updateProgressBar(timeLeft, totalTime);
 
     timer = setInterval(() => {
         timeLeft -= 1;
         document.getElementById('time-left').textContent = timeLeft;
+        updateProgressBar(timeLeft, totalTime);
 
         if (timeLeft <= 0) {
             clearInterval(timer);
             generateCode();
         }
     }, 1000);
+}
+
+function updateProgressBar(timeLeft, totalTime) {
+    const progress = (timeLeft / totalTime) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
 }
 
 function copyCodeToClipboard() {
@@ -65,23 +74,22 @@ let alertTimeout2;
 function showAlert(message, isError = false) {
     const alertBox = document.getElementById('alert');
 
-    // Clear any previous timeouts
     clearTimeout(alertTimeout1);
     clearTimeout(alertTimeout2);
 
-    // Reset alert box style and content
     alertBox.textContent = message;
     alertBox.className = isError ? 'alert alert-error' : 'alert';
     alertBox.style.display = 'block';
     alertBox.style.opacity = '1';
 
     alertTimeout1 = setTimeout(() => {
-        alertBox.style.opacity = '0'; // Start fading out
-    }, 2000); // Wait for 2 seconds before starting to fade out
+        alertBox.style.opacity = '0';
+    }, 2000);
 
     alertTimeout2 = setTimeout(() => {
         alertBox.style.display = 'none';
-    }, 3000); // Wait for the fade out to complete before hiding
+        alertBox.style.opacity = '1';
+    }, 3000);
 }
 
 function resetCodeAndTimer() {
@@ -90,4 +98,6 @@ function resetCodeAndTimer() {
     }
     document.getElementById('code').textContent = '';
     document.getElementById('timer').style.display = 'none';
+    document.getElementById('progress-container').style.display = 'none';
+    document.getElementById('progress-bar').style.width = '0%';
 }
