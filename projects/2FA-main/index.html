@@ -11,7 +11,7 @@
         <h1>Facebook 2FA</h1>
         <div class="input-group">
             <label for="secret">Secret Key:</label>
-            <input type="text" id="secret" placeholder="Enter your secret key" value="">
+            <input type="text" id="secret" placeholder="Enter your secret key">
         </div>
         <button id="generate">Generate Code</button>
         <div class="code-container">
@@ -19,8 +19,11 @@
             <div class="code" id="code" onclick="copyCodeToClipboard()"></div>
         </div>
         <div class="timer" id="timer">Valid for: <span id="time-left">30</span> seconds</div>
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
     </div>
-    <div class="alert" id="alert"></div>
+    <div class="alert" id="alert">2FA code copied to clipboard!</div>
     <script src="https://cdn.jsdelivr.net/npm/otplib/otplib-browser.min.js"></script>
     <script src="script.js"></script>
 </body>
